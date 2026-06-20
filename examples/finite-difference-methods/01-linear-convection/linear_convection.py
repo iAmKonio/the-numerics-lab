@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 def initial_condition(x):
     """
@@ -96,8 +97,14 @@ def main():
     plt.legend()
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig('output/linear_convection_comparison.png')
-    print("Plot saved to output/linear_convection_comparison.png")
+    
+    # Save output
+    example_dir = Path(__file__).resolve().parent
+    output_dir = example_dir / "output"
+    output_dir.mkdir(exist_ok=True)
+    output_path = output_dir / "linear_convection_comparison.png"
+    plt.savefig(output_path, dpi=200, bbox_inches="tight")
+    print(f"Plot saved to {output_path.relative_to(example_dir)}")
 
 if __name__ == '__main__':
     main()
