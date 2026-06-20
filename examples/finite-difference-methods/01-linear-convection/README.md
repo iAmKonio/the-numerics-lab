@@ -71,24 +71,27 @@ python3 linear_convection.py
 ```
 
 ## Expected result
-The script will output the simulation parameters and the L2 error of the numerical solution compared to the analytic solution. It will also generate a plot saved in the `output/` directory.
+The script will output a table comparing the simulation parameters, L2 error, and stability for three different CFL numbers (0.8, 1.0, and 1.2). It will also generate a plot saved in the `output/` directory that visualizes these three runs alongside the analytic solution.
 
 ```
 --- 1-D Linear Convection (Explicit Upwind FDM) ---
-Number of cells: 100
-CFL number:      0.8
-Final time:      1.00
-L2 Error:        ...
-Plot saved to output/linear_convection_comparison.png
+CFL   | Steps | dt       | Final t | L2 Error   | Stability
+-----------------------------------------------------------------
+0.8   | 62    | 0.0080   | 0.4960  | 2.7124e-02 | Stable
+1.0   | 50    | 0.0100   | 0.5000  | 1.4569e-16 | Stable
+1.2   | 42    | 0.0120   | 0.5040  | 3.5186e-02 | Unstable
+
+Plot saved to output/linear_convection_cfl_sweep.png
 ```
 
 ## Numerical behavior and comparison with analytic solution
-The continuous solution translates the pulse perfectly without changing its shape. The numerical solution, however, exhibits numerical diffusion due to the first-order truncation error of the upwind scheme. The peak of the pulse will appear shorter and wider. Higher resolution or higher-order schemes (like Lax-Wendroff) are required to minimize this diffusion.
+- **CFL = 0.8 (Stable, Diffusive):** The numerical solution exhibits numerical diffusion due to the first-order truncation error of the upwind scheme. The peak of the pulse will appear shorter and wider.
+- **CFL = 1.0 (Exact, "Magic" step):** For the upwind scheme, a CFL of exactly 1.0 results in zero numerical diffusion and dispersion. The numerical solution perfectly matches the analytic solution because the wave travels exactly one grid cell per time step.
+- **CFL = 1.2 (Unstable):** The numerical scheme violates the CFL condition ($\sigma \le 1$), leading to instability. Oscillations grow unboundedly, destroying the solution.
 
 ## What to try next
-- Change the CFL number to 1.0 and observe how numerical diffusion vanishes.
-- Change the CFL number to > 1.0 and watch the simulation explode.
-- Change the initial condition to a square wave to see severe numerical smearing on discontinuities.
+- Change the initial condition to a square wave to see severe numerical smearing on discontinuities for stable CFLs.
+- Explore a higher-order scheme (like Lax-Wendroff) to see how it handles numerical diffusion and dispersion differently.
 
 ## Connection to The Numerics Lab
 This is an educational example created as part of The Numerics Lab module.
