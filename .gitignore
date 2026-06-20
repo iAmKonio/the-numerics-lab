@@ -1,2 +1,11 @@
-output/
+# Python generated files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# macOS generated files
+.DS_Store
+
+# Example generated output
+examples/**/output/
 *.png
